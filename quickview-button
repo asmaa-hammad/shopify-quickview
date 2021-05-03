@@ -1,0 +1,6 @@
+//THIS BUTTON INCLUDES IN THE PRODUCT-CARD WHICH IN COLLECTION TEMBLATE
+
+<button class="btn btn-secondary quickViewOverlay-open" data-handle="{{ product.id }}"  data-target="{{ product.handle }}">
+  <svg class="svgIcon me-2 fs-md"><use xlink:href="#icon-eye"></use></svg>
+  <span>Quick Look</span>
+</button>

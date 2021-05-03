@@ -1,0 +1,111 @@
+//THIS IS A SNIPPET FILE
+
+<div class="quickViewOverlay" id="quickView-Overlay">
+  <div class="quickViewOverlay-bg quickViewOverlay-close"></div>
+  <div class="quickViewOverlay-container">
+    <a class="quickViewOverlay-close quickViewOverlay-btn" href="javascript:void(0)" title="Close">
+      <svg class="svgIcon"><use xlink:href="#icon-cancel"></use></svg>
+    </a>
+    `   
+    <div class="row justify-content-between">
+      <div class="col-md-6">
+        <div class="product-slider">
+          <div class="swiper-container gallery-top2"  id="qv-product-images">
+            <div class="swiper-wrapper">
+              {% for image in product.images %}
+              <div class="swiper-slide">
+                <div class="product-image">
+                  <div class="appImage inViewJs"  data-thumb="{{ image.src | img_url: '1920x'}}" >
+                    <img data-src="{{ image.src | img_url: '1920x'}}" data-zoom="" alt="{{ product.title | escape  }}"/>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="swiper-container gallery-thumbs2" >
+             <div class="swiper-wrapper">
+               {% for image in product.images %}
+               <div class="swiper-slide">
+                 <div class="product-image" id="qv-product-images-thumbs">
+                   <div class="appImage inViewJs" id="qv-product-images" data-thumb="{{image.src | img_url: '50x'}}" >
+                     <img data-src="{{image.src | img_url: '1920x'}}" data-zoom="" alt="{{ product.title | escape  }}"/>
+                   </div>
+                 </div> 
+               </div>
+               {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="mb-xl d-md-none"></div>
+      </div>
+      
+      <div class="col-lg-6">
+        <h1 class="fs-xl mb-sm d-flex align-items-center" id="qv-product-title">{{ product.title }}</h1>
+        
+        
+        <p class="text-info fs-md mb-xxs" id="qv-product-type">{{ product.type}}</p>
+        <p class="fs-md mb-md text-muted" id="qv-image-id"></p>
+        <h2 class="product-price mb-md fs-lg">
+          <span id="qv-product-price" class="d-flex align-items-start">{{ product.price | money }}</span>
+			{% if product.compare_at_price and product.compare_at_price != product.price %}
+          <span id="product-price-old">{{product.compare_at_price | money}}</span>
+           {% endif %}
+        </h2>     
+        <p class="mb-md" id="qv-product-description" class="d-flex align-items-start" >{{ product.description | strip_html | truncate: 180 | replace: 'Description', '' }}</p>
+            
+
+        <form id="form-{{product.handle}}" method="post" action="/cart/add">
+
+          {% if product.has_only_default_variant %}
+          <input name="id" value="{{ variant.id }}" type="hidden">
+          {% else %}
+          {% for variant in product.variants %}
+          <input type="radio" name="id" value="{{ variant.id }}">
+          <label>{{ variant.title }}</label><br>
+          {% endfor%}         
+          {% endif %}
+
+          <div class="qtydiv mb-md d-flex align-items-center">
+            <label for="quantity" class="quantity-selector mb-0 text-sm me-3 font-weight-bold">QTY</label>
+            <div class="qtybox">
+              <span class="btnqty qtyminus icon icon-minus">-</span>
+              <input type="text" id="quantity" name="quantity" value="1" min="1" class="quantity-selector quantity-input" readonly="">
+              <span class="btnqty qtyplus icon icon-plus">+</span>
+            </div>
+          </div>     
+
+          <div class="d-flex align-items-center">
+            <input type="hidden" id="variant-id" name="id" value={{ product.variants.first.id }}>
+            <input type="submit" name="add" id="add" value="Add to Cart" class="btn btn-secondary fs-md me-2 product-btn">
+            
+              <!-- include 'wishlist-button-product' with '{{ product.id }}' -->
+
+            <div class="product-share">
+              <a class="product-share-trigger" href="javascirpt:void(0)"
+                 ><svg class="svgIcon is-share">
+                <use xlink:href="#icon-share"></use></svg
+                ><svg class="svgIcon is-close">
+                <use xlink:href="#icon-cancel"></use></svg
+                ></a>
+              <div class="product-share-items">
+                <a href="javascript:void(0)" title="facebook"
+                   ><svg class="svgIcon">
+                  <use xlink:href="#icon-facebook"></use></svg></a
+                  ><a href="javascript:void(0)" title="twitter"
+                      ><svg class="svgIcon">
+                <use xlink:href="#icon-twitter"></use></svg></a
+                ><a href="javascript:void(0)" title="whatsapp"
+                    ><svg class="svgIcon">
+                <use xlink:href="#icon-whatsapp"></use></svg
+                ></a>
+              </div>
+            </div>
+          </div>
+    	</form>
+      </div>
+    </div>  
+  </div>
+</div>
+

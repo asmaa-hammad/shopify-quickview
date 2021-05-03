@@ -1,0 +1,30 @@
+//COLLECTION TEMPLATE
+
+<form id="collection-form" method="get" action="{{ collection.url }}">
+  <div class="container pb-xl">
+    <section class="">
+      <div class="row">
+        <div class="col-lg-3">
+          {% include 'collection-filter' %}
+        </div>
+        <div class="col-lg-9">
+
+          <div class="row products-row">
+            {% paginate collection.products by 12 %}
+            {% for product in collection.products %}
+            <div class="col-6 col-md-4 col-xl-3 col-xxl-3 mb-col">
+              {% include 'app-card' %}
+            </div>
+            {% endfor %}
+            
+            {% include 'pagination' %}
+            
+            {% endpaginate %}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</form>
+
+
